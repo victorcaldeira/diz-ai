@@ -3,9 +3,10 @@ $(document).ready(function () {    //Sempre que a pagina é carregada imprime os
     for (let index = 0; index < lista_inicial.length; index++) {
         const element = lista_inicial[index];
         let likes = parseInt(element.like);
+        let date = new Date(element.data)
         $("#timeline").prepend(`
             <div>
-                <h3> ${new Date(element.data)} - Relato </h3>
+                <h4>Categoria: ${element.tipo} -- ${date.getDate()}/${date.getMonth()}/${date.getFullYear()} ${date.getHours()}:${date.getMinutes()}</h4>
                 <p>
                 ${element.relato}
                 </p>
@@ -26,12 +27,14 @@ function curtida(num){
 
 
 function enviarRelato() {
-    var relato = $("#Relato").val();
+    let relato = $("#Relato").val();
+    let tipos = $("#Tipo").val();
     $("#Relato").val("");
     let date = new Date();
     var likes = 0;
     var lista_relatos = JSON.parse(localStorage.getItem('lista-relatos') || '[]');
     lista_relatos.push({
+        tipo: tipos,
         data: date,
         relato: relato,
         like: likes
@@ -40,7 +43,7 @@ function enviarRelato() {
     //console.log('Salva com sucesso.');
     $("#timeline").prepend(`
         <div>
-            <h3> ${date} - Relato </h3>
+            <h4>Categoria: ${tipos} -- ${date.getDate()}/${date.getMonth()}/${date.getFullYear()} ${date.getHours()}:${date.getMinutes()}</h4>
             <p>
             ${relato}
             </p>
